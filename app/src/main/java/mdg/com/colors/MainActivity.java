@@ -16,6 +16,8 @@ public class MainActivity extends AppCompatActivity {
 
     RelativeLayout relLayout;
     TextView txtclk;
+    Calendar rightNow;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,13 +36,16 @@ public class MainActivity extends AppCompatActivity {
         runOnUiThread(new Runnable() {
             public void run() {
                 try{
-                    Date dt = new Date();
-                    int hours = dt.getHours();
-                    int minutes = dt.getMinutes();
-                    int seconds = dt.getSeconds();
-                    String curTime = hours + ":" + minutes + ":" + seconds;
+                   rightNow = Calendar.getInstance();
+                    int hours = rightNow.get(Calendar.HOUR);
+                    int minutes = rightNow.get(Calendar.MINUTE);
+                    int seconds = rightNow.get(Calendar.SECOND);
+                   String hrs = modifyDigit(hours);
+                   String mins = modifyDigit(minutes);
+                   String secs = modifyDigit(seconds);
+                    String curTime = hrs + ":" + mins + ":" + secs;
                     txtclk.setText(curTime);
-                    String color = "#" + Integer.toString(hours) + Integer.toString(minutes) + Integer.toString(seconds);
+                    String color = "#" + hrs + mins+ secs;
                     relLayout.setBackgroundColor(Color.parseColor(color));
                 }catch (Exception e) {
                     e.printStackTrace();
@@ -61,5 +66,15 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         }
+    }
+
+    public String modifyDigit(int value){
+        String value2 = Integer.toString(value);
+        if(value<10){
+            String hr1 = Integer.toString(value);
+            value2 = "0" + hr1;
+        }
+        Log.e("modified time:", value2);
+        return value2;
     }
 }
