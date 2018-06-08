@@ -1,16 +1,14 @@
 package mdg.com.colors;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.RelativeLayout;
-import android.widget.TextClock;
 import android.widget.TextView;
-
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Date;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -55,7 +53,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     class Time implements Runnable{
-        // @Override
         public void run() {
             while(!Thread.currentThread().isInterrupted()){
                 try {
@@ -74,7 +71,14 @@ public class MainActivity extends AppCompatActivity {
             String hr1 = Integer.toString(value);
             value2 = "0" + hr1;
         }
-        Log.e("modified time:", value2);
         return value2;
+    }
+
+    public void openClockApp(View view){
+        Intent launchIntent = getPackageManager().getLaunchIntentForPackage("com.google.android.deskclock");
+        if (launchIntent != null) {
+            startActivity(launchIntent);//null pointer check in case package name was not found
+        }
+        else Log.e("eroro","errrrr");
     }
 }
